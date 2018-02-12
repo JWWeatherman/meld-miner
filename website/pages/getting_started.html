@@ -187,8 +187,7 @@
         {{? (function(){
                 if (!it.portalConfig.switching) return false;
                 for (var p in it.portalConfig.switching){
-                    if (it.portalConfig.switching[p].enabled)
-                        return true;
+                    return it.portalConfig.switching[p].enabled
                 }
                 return false;
             })()
@@ -227,19 +226,7 @@
     </div>
 
     <div id="main">
-        <a href="#" class="miningOption" id="nompAppDownload">
-            <div class="miningOptionNum">1.</div>
-            <div class="miningOptionInstructions">
-                <div>Download NOMP App</div>
-                <div>Our preconfigured app makes mining that easy</div>
-            </div>
-        </a>
-        <div id="orHolder">
-            <div id="orLine"></div>
-            <div id="orText">or</div>
-        </div>
         <a href="#" class="miningOption" id="coinGlowTrigger">
-            <div class="miningOptionNum">2.</div>
             <div class="miningOptionInstructions">
                 <div>Select a coin for connection details</div>
                 <div>Configurations for each coin are available for advanced miners</div>
@@ -273,9 +260,10 @@
         var htmlValues = '<div class="coinInfoData">' + info.algo + '</div>';
 
         for (var port in info.ports){
-            htmlKeys += '<div class="coinInfoData">URL <span class="coinInfoSubtle">(difficulty ' + info.ports[port].diff + ')</span>:</div>';
+            var diff = info.ports[port].diff ? info.ports[port].diff : 10;
+            htmlKeys += '<div class="coinInfoData">URL <span class="coinInfoSubtle">(difficulty ' + diff + ')</span>:</div>';
             htmlValues += '<div class="coinInfoData">stratum+tcp://' + info.host + ':' + port + '</div>';
-        }
+        }       
 
         if (info.coin)
             $('#coinInfoUsername').text('your ' + info.coin.name + ' wallet address');
