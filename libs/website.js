@@ -1,4 +1,3 @@
-
 var fs = require('fs');
 var path = require('path');
 
@@ -22,6 +21,7 @@ module.exports = function(logger){
     dot.templateSettings.strip = false;
 
     var portalConfig = JSON.parse(process.env.portalConfig);
+
     var poolConfigs = JSON.parse(process.env.pools);
 
     var websiteConfig = portalConfig.website;
