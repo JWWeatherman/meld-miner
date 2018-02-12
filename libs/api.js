@@ -20,7 +20,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
                 return;
             case 'pool_stats':
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(portalStats.statPoolHistory));
+                res.end(JSON.stringify(portalStats.statPoolHistory, null, 4));
                 return;
             case 'live_stats':
                 res.writeHead(200, {

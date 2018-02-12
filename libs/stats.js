@@ -239,7 +239,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
             });
 
             _this.stats = portalStats;
-            _this.statsString = JSON.stringify(portalStats);
+            _this.statsString = JSON.stringify(portalStats, null, 4);
 
 
 
