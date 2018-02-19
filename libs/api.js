@@ -1,56 +1,58 @@
-var redis = require('redis');
-var async = require('async');
+var redis
+redis = require('redis')
+var async
+async = require('async')
 
 var stats = require('./stats.js');
 
-module.exports = function(logger, portalConfig, poolConfigs){
+module.exports = function (logger, portalConfig, poolConfigs) {
 
 
-    var _this = this;
+  var _this = this;
 
-    var portalStats = this.stats = new stats(logger, portalConfig, poolConfigs);
+  var portalStats = this.stats = new stats(logger, portalConfig, poolConfigs);
 
-    this.liveStatConnections = {};
+  this.liveStatConnections = {};
 
-    this.handleApiRequest = function(req, res, next){
-        switch(req.params.method){
-            case 'stats':
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(portalStats.statsString);
-                return;
-            case 'pool_stats':
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(portalStats.statPoolHistory, null, 4));
-                return;
-            case 'live_stats':
-                res.writeHead(200, {
-                    'Content-Type': 'text/event-stream',
-                    'Cache-Control': 'no-cache',
-                    'Connection': 'keep-alive'
-                });
-                res.write('\n');
-                var uid = Math.random().toString();
-                _this.liveStatConnections[uid] = res;
-                req.on("close", function() {
-                    delete _this.liveStatConnections[uid];
-                });
+  this.handleApiRequest = function (req, res, next) {
+    switch (req.params.method) {
+      case 'stats':
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(portalStats.statsString);
+        return;
+      case 'pool_stats':
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(portalStats.statPoolHistory, null, 4));
+        return;
+      case 'live_stats':
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive'
+        });
+        res.write('\n');
+        var uid = Math.random().toString();
+        _this.liveStatConnections[uid] = res;
+        req.on("close", function () {
+          delete _this.liveStatConnections[uid];
+        });
 
-                return;
-            default:
-                next();
-        }
-    };
+        return;
+      default:
+        next();
+    }
+  };
 
 
-    this.handleAdminApiRequest = function(req, res, next){
-        switch(req.params.method){
-            case 'pools': {
-                res.end(JSON.stringify({result: poolConfigs}));
-                return;
-            }
-            default:
-                next();
-        }
-    };
+  this.handleAdminApiRequest = function (req, res, next) {
+    switch (req.params.method) {
+      case 'pools': {
+        res.end(JSON.stringify({result: poolConfigs}));
+        return;
+      }
+      default:
+        next();
+    }
+  };
 
 };

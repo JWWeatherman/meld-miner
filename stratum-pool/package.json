@@ -1,0 +1,35 @@
+{
+  "author": {
+    "name": "Matthew Little"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "base58-native": "^0.1.4",
+    "bignum": "^0.12.5",
+    "multi-hashing": "git://github.com/foxer666/node-multi-hashing.git"
+  },
+  "deprecated": false,
+  "description": "High performance Stratum poolserver in Node.js",
+  "engines": {
+    "node": ">=8.1.4"
+  },
+  "homepage": "https://github.com/foxer666/node-stratum-pool",
+  "keywords": [
+    "stratum",
+    "mining",
+    "pool",
+    "server",
+    "poolserver",
+    "bitcoin",
+    "litecoin",
+    "scrypt"
+  ],
+  "license": "GPL-2.0",
+  "main": "lib/index.js",
+  "name": "stratum-pool",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foxer666/node-stratum-pool.git"
+  },
+  "version": "1.0.1"
+}
