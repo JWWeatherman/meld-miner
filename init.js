@@ -446,17 +446,17 @@ var startMeldServer = function() {
 
 (function init() {
 
-  // poolConfigs = buildPoolConfigs();
-  //
-  // spawnPoolWorkers();
-  //
-  // startPaymentProcessor();
-  //
-  // startWebsite();
-  //
-  // startProfitSwitch();
-  //
-  // startCliListener();
+  poolConfigs = buildPoolConfigs();
+
+  spawnPoolWorkers();
+
+  startPaymentProcessor();
+
+  startWebsite();
+
+  startProfitSwitch();
+
+  startCliListener();
 
   startMeldServer();
 

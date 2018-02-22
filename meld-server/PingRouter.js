@@ -6,6 +6,7 @@ class PingRouter {
   }
 
   pong (req, res) {
+    logger.debug('Meld', 'Server', 'Call to /ping. Response="PONG"')
     res.json('PONG')
   }
 

@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 // Router paths
@@ -17,7 +16,6 @@ class App {
 
   // Configure express middleware
   _middleware () {
-    this.express.use(logger('dev'));
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({extended: false}));
     this.express.use(express.static(path.resolve(__dirname + '/public')));
