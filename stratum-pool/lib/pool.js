@@ -573,7 +573,7 @@ var pool = module.exports = function pool(options, authorizeFn) {
       [{"capabilities": ["coinbasetxn", "workid", "coinbase/append"], "rules": ["segwit"]}],
       function (result) {
         if (result.error) {
-          console.log("GetBlockTemplate()", result);
+          // console.log("GetBlockTemplate()", result);
           emitErrorLog('getblocktemplate call failed for daemon instance ' +
             result.instance.index + ' with error ' + JSON.stringify(result.error));
           callback(result.error);

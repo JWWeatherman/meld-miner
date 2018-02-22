@@ -1,17 +1,16 @@
 const http = require('http')
 const App = require('./App')
 
-let logger, server;
+let server;
 
 const port = normalizePort(process.env.PORT || 2727);
-App.set('port', port);
 
 function normalizePort (val) {
   let port = (typeof val === 'string') ? parseInt(val, 10) : val;
 
   if (isNaN(port)) return val;
   else if (port >= 0) return port;
-  else logger.error('Meld-Server', 'Connection', `Unable to normalize port ${port}`)
+  else logger.error('Meld', 'Server', `Unable to normalize port ${port}`)
 }
 
 function onError (error) {
@@ -21,11 +20,11 @@ function onError (error) {
 
   switch(error.code) {
     case 'EACCES':
-      logger.error('Meld-Server', 'Connection Failed', `${bind} requires elevated privileges`)
+      logger.error('Meld', 'Server', `${bind} requires elevated privileges`)
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      logger.error('Meld-Server', 'Connection Failed', `${bind} is already in use`)
+      logger.error('Meld', 'Server', `${bind} is already in use`)
       process.exit(1);
       break;
     default:
@@ -37,17 +36,19 @@ function onListening () {
   let addr = server.address();
   let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
 
-  logger.debug('Meld-Server', 'Connection Successful', `listening on ${bind}`)
+  logger.debug('Meld', 'Connection Successful', `listening on ${bind}`)
 }
 
 function init (l) {
-  logger = l;
+  global.logger = l // best way to handle this logger.
+  App.set('port', port);
   server = http.createServer(App);
   server.listen(port, () => {
-    logger.debug('Meld-Server', 'Connection Started', 'Starting server...')
+    logger.debug('Meld', 'Connection Started', 'Starting server...')
   });
   server.on('error', onError);
   server.on('listening', onListening);
+  return this;
 }
 
 module.exports = init
