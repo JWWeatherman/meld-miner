@@ -12,6 +12,7 @@ var PoolWorker = require('./libs/poolWorker.js');
 var PaymentProcessor = require('./libs/paymentProcessor.js');
 var Website = require('./libs/website.js');
 var ProfitSwitch = require('./libs/profitSwitch.js');
+var MeldServer = require('./meld-server/Index')
 
 var algos = require('./stratum-pool/lib/algoProperties.js');
 
@@ -80,6 +81,9 @@ if (cluster.isWorker) {
       break;
     case 'profitSwitch':
       new ProfitSwitch(logger);
+      break;
+    case 'meldServer':
+      new MeldServer(logger);
       break;
   }
 
@@ -430,19 +434,30 @@ var startProfitSwitch = function () {
   });
 };
 
+var startMeldServer = function() {
+  var worker = cluster.fork({
+    workerType: 'meldServer'
+  })
+  worker.on('exit', function () {
+    logger.error('Master', 'Meld Server', 'Meld server crashed, attempting to restart...');
+  })
+};
+
 
 (function init() {
 
-  poolConfigs = buildPoolConfigs();
+  // poolConfigs = buildPoolConfigs();
+  //
+  // spawnPoolWorkers();
+  //
+  // startPaymentProcessor();
+  //
+  // startWebsite();
+  //
+  // startProfitSwitch();
+  //
+  // startCliListener();
 
-  spawnPoolWorkers();
-
-  startPaymentProcessor();
-
-  startWebsite();
-
-  startProfitSwitch();
-
-  startCliListener();
+  startMeldServer();
 
 })();
