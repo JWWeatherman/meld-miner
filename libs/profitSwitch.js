@@ -56,7 +56,7 @@ module.exports = function (logger) {
       });
     }
   });
-  if (Object.keys(profitStatus).length == 0) {
+  if (Object.keys(profitStatus).length === 0) {
     logger.debug(logSystem, 'Config', 'No alternative coins to switch to in current config, switching disabled.');
     return;
   }

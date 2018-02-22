@@ -23,7 +23,6 @@ module.exports = function (logger) {
   //Handle messages from master process sent via IPC
   process.on('message', function (message) {
     switch (message.type) {
-
       case 'banIP':
         for (var p in pools) {
           if (pools[p].stratumServer)
@@ -32,7 +31,6 @@ module.exports = function (logger) {
         break;
 
       case 'blocknotify':
-
         var messageCoin = message.coin.toLowerCase();
         var poolTarget = Object.keys(pools).filter(function (p) {
           return p.toLowerCase() === messageCoin;
@@ -139,8 +137,12 @@ module.exports = function (logger) {
       var shareProcessor = new ShareProcessor(logger, poolOptions);
 
       handlers.auth = function (port, workerName, password, authCallback) {
-        if (poolOptions.validateWorkerUsername !== true)
+        console.log('workerName', workerName)
+        console.log('password', password)
+
+        if (poolOptions.validateWorkerUsername !== true) {
           authCallback(true);
+        }
         else {
           if (workerName.length === 40) {
             try {
@@ -287,6 +289,7 @@ module.exports = function (logger) {
               pools[initalPool].getStratumServer().handleNewClient(socket);
 
           }).listen(parseInt(port), function () {
+
             logger.debug(logSystem, logComponent, logSubCat, 'Switching "' + switchName
               + '" listening for ' + algorithm
               + ' on port ' + port

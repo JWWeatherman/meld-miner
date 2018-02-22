@@ -6,8 +6,6 @@ async = require('async')
 var stats = require('./stats.js');
 
 module.exports = function (logger, portalConfig, poolConfigs) {
-
-
   var _this = this;
 
   var portalStats = this.stats = new stats(logger, portalConfig, poolConfigs);
@@ -54,5 +52,4 @@ module.exports = function (logger, portalConfig, poolConfigs) {
         next();
     }
   };
-
 };
