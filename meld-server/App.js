@@ -27,7 +27,7 @@ class App {
   _routes () {
     // let router = express.Router();
     // Add routes here
-    this.express.use('/meld/v1/ping', PingRouter);
+    this.express.use('/meld/ping', PingRouter);
   }
 }
 
